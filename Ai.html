@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+</head>
+
+<body>
+    <h1>AI Assistant</h1>
+    <button onclick="startListening()">Start Listening</button>
+    <button onclick="stopListening()">Stop Listening</button>
+
+    <!-- Added div element to display responses -->
+    <div id="response"></div>
+
+    <script>
+        // Initialize speech recognition object
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-US';
+
+        // Define the AI's name
+        const aiName = "Mic";
+
+        // Function to speak
+        function speak(text) {
+            // Code to speak using pyttsx3 goes here
+            console.log(text);
+
+            // Display response on the screen
+            document.getElementById("response").innerText = text;
+        }
+
+        // Function to greet
+        function greet() {
+            const hour = new Date().getHours();
+            let greeting;
+            if (hour < 12) {
+                greeting = "Good morning!";
+            } else if (hour < 18) {
+                greeting = "Good afternoon!";
+            } else {
+                greeting = "Good evening!";
+            }
+            speak(greeting);
+        }
+
+        // Function to execute math equations
+        function executeMathEquation(query) {
+            try {
+                const result = eval(query);
+                speak(`The result of ${query} is ${result}`);
+            } catch (error) {
+                speak("Sorry, I couldn't solve that math equation.");
+            }
+        }
+
+        // Function to execute commands
+        function executeCommand(query) {
+            if (query.includes('wikipedia')) {
+                speak('Searching Wikipedia...');
+                const searchTerm = query.replace("wikipedia", "").trim();
+                // Code to fetch Wikipedia summary using searchTerm goes here
+            } else if (query.includes('time')) {
+                const time = new Date().toLocaleTimeString();
+                speak(`The current time is ${time}`);
+            } else if (query.toLowerCase().includes(aiName.toLowerCase())) {
+                speak(`Yes, how can I help you, ${aiName}?`);
+            } else if (query.toLowerCase().includes('exit')) {
+                speak("Goodbye!");
+                recognition.stop();
+            } else if (query.includes('calculate')) {
+                const expression = query.replace("calculate", "").trim();
+                executeMathEquation(expression);
+            } else {
+                speak("Sorry, I am not programmed to do that yet.");
+            }
+        }
+
+        // Event listener for speech recognition
+        recognition.onresult = function(event) {
+            const query = event.results[0][0].transcript.toLowerCase();
+            console.log('User said:', query);
+            executeCommand(query);
+        }
+
+        // Start listening function
+        function startListening() {
+            greet();
+            speak("How can I assist you today?");
+            recognition.start();
+        }
+
+        // Stop listening function
+        function stopListening() {
+            recognition.stop();
+        }
+    </script>
+</body>
+
+</html>
