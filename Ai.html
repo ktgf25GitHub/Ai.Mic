@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Assistant</title>
+    <title>MO12-AI</title>
 </head>
 
 <body>
-    <h1>AI Assistant</h1>
+    <h1>MO12</h1>
     <button onclick="startListening()">Start Listening</button>
     <button onclick="stopListening()">Stop Listening</button>
 
@@ -21,7 +21,31 @@
         recognition.lang = 'en-US';
 
         // Define the AI's name
-        const aiName = "Mic";
+        const aiName = "MO12";
+
+        // Pre-defined dictionary of words and definitions
+        const dictionary = {
+            "apple": "A round fruit with red or green skin and a whitish inside.",
+            "computer": "An electronic device that stores and processes data.",
+            "book": "A written or printed work consisting of pages glued or sewn together along one side.",
+            "cat": "A small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws.",
+            "dog": "A domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, non-retractable claws, and a barking, howling, or whining voice.",
+            "tree": "A woody perennial plant, typically having a single stem or trunk growing to a considerable height and bearing lateral branches at some distance from the ground.",
+            "sun": "The star around which the earth orbits.",
+            "moon": "The natural satellite of the earth, visible by reflected light from the sun.",
+            "flower": "The seed-bearing part of a plant, consisting of reproductive organs (stamens and carpels) that are typically surrounded by a brightly colored corolla (petals) and a green calyx (sepals).",
+            "river": "A large natural stream of water flowing in a channel to the sea, a lake, or another such stream.",
+            "mountain": "A large natural elevation of the earth's surface rising abruptly from the surrounding level; a large steep hill.",
+            "ocean": "A very large expanse of sea, in particular each of the main areas into which the sea is divided geographically.",
+            "cloud": "A visible mass of condensed water vapor floating in the atmosphere, typically high above the ground.",
+            "rain": "Moisture condensed from the atmosphere that falls visibly in separate drops.",
+            "snow": "Atmospheric water vapor frozen into ice crystals and falling in light white flakes or lying on the ground as a white layer.",
+            "wind": "The perceptible natural movement of the air, especially in the form of a current of air blowing from a particular direction.",
+            "fire": "Combustion or burning, in which substances combine chemically with oxygen from the air and typically give out bright light, heat, and smoke.",
+            "earth": "The planet on which we live; the world.",
+            "sky": "The region of the atmosphere and outer space seen from the earth.",
+            "star": "A fixed luminous point in the night sky that is a large, remote incandescent body like the sun.",
+        };
 
         // Function to speak
         function speak(text) {
@@ -46,16 +70,6 @@
             speak(greeting);
         }
 
-        // Function to execute math equations
-        function executeMathEquation(query) {
-            try {
-                const result = eval(query);
-                speak(`The result of ${query} is ${result}`);
-            } catch (error) {
-                speak("Sorry, I couldn't solve that math equation.");
-            }
-        }
-
         // Function to execute commands
         function executeCommand(query) {
             if (query.includes('wikipedia')) {
@@ -71,10 +85,47 @@
                 speak("Goodbye!");
                 recognition.stop();
             } else if (query.includes('calculate')) {
+                // Extracting the mathematical expression from the query
                 const expression = query.replace("calculate", "").trim();
-                executeMathEquation(expression);
+                try {
+                    // Evaluating the mathematical expression
+                    const result = eval(expression);
+                    speak(`The result of ${expression} is ${result}`);
+                } catch (error) {
+                    speak("Sorry, I couldn't calculate that.");
+                }
+            } else if (query.includes('capabilities')) {
+                listCapabilities();
+            } else if (query.includes('define')) {
+                // Extract the word to define
+                const word = query.replace("define", "").trim();
+                defineWord(word);
             } else {
                 speak("Sorry, I am not programmed to do that yet.");
+            }
+        }
+
+        // Function to list capabilities
+        function listCapabilities() {
+            const capabilities = [
+                "1. Search Wikipedia for information.",
+                "2. Provide the current time.",
+                "3. Perform mathematical calculations.",
+                "4. Define words from the pre-defined dictionary." // Updated capability
+                // Add more capabilities as needed
+            ];
+            const response = "Here are the things I can do:\n" + capabilities.join("\n");
+            speak(response);
+        }
+
+        // Function to define a word using the pre-defined dictionary
+        function defineWord(word) {
+            // Check if the word exists in the dictionary
+            if (dictionary.hasOwnProperty(word)) {
+                const definition = dictionary[word];
+                speak(`The definition of ${word} is: ${definition}`);
+            } else {
+                speak(`Sorry, I couldn't find the definition for ${word}.`);
             }
         }
 
@@ -88,7 +139,7 @@
         // Start listening function
         function startListening() {
             greet();
-            speak("How can I assist you today?");
+            speak("Hi I'm MO12 How can I assist you today?");
             recognition.start();
         }
 
