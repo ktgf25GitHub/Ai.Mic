@@ -39,11 +39,23 @@
             background-color: #000000;
             color: #1eff00; /* Added color change on hover */
         }
+        
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #5eff00;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
 <body>
     <h1>MO12</h1>
+    <input type="text" id="prompt" placeholder="Enter your prompt here...">
+    <button onclick="submitPrompt()">Submit Prompt</button>
+
+    
     <button onclick="startListening()">Start Listening</button>
     <button onclick="stopListening()">Stop Listening</button>
 
@@ -184,6 +196,12 @@
         // Stop listening function
         function stopListening() {
             recognition.stop();
+        }
+
+        // Function to submit prompt from text box
+        function submitPrompt() {
+            const prompt = document.getElementById("prompt").value.toLowerCase();
+            executeCommand(prompt);
         }
     </script>
 </body>
