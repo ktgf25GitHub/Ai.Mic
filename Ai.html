@@ -37,8 +37,7 @@
         
         button:hover {
             background-color: #000000;
-            color: #1eff00;
-            /* Added color change on hover */
+            color: #1eff00; /* Added color change on hover */
         }
     </style>
 </head>
@@ -87,6 +86,15 @@
         function speak(text) {
             // Display response on the screen
             document.getElementById("response").innerText = text;
+            
+            // Use text-to-speech
+            const speech = new SpeechSynthesisUtterance();
+            speech.lang = 'en-US';
+            speech.text = text;
+            speech.volume = 1;
+            speech.rate = 1;
+            speech.pitch = 1;
+            window.speechSynthesis.speak(speech);
         }
 
         // Function to greet
