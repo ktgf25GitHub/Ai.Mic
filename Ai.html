@@ -4,45 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speech Recognition AI</title>
+    <title>MO12</title>
 
     <!-- Added CSS styles -->
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f4f4f4;
+            color: #5eff00;
+            background-color: #000000;
             margin: 0;
             padding: 0;
         }
-
+        
         #response {
             margin-top: 20px;
             padding: 10px;
-            background-color: #fff;
+            background-color: #000000;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
+        
         button {
             margin-top: 10px;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #1eff00;
+            color: #000000;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-
+        
         button:hover {
-            background-color: #0056b3;
+            background-color: #000000;
+            color: #1eff00;
+            /* Added color change on hover */
         }
     </style>
 </head>
 
 <body>
-    <h1>Speech Recognition AI</h1>
+    <h1>MO12</h1>
     <button onclick="startListening()">Start Listening</button>
     <button onclick="stopListening()">Stop Listening</button>
 
@@ -167,4 +169,15 @@
         }
 
         // Start listening function
-<html>       
+        function startListening() {
+            recognition.start();
+        }
+
+        // Stop listening function
+        function stopListening() {
+            recognition.stop();
+        }
+    </script>
+</body>
+
+</html>
